@@ -42,8 +42,8 @@ public class EntitySpeed extends Module {
 
     private final Setting<Boolean> tpsAdjust = sgGeneral.add(new BoolSetting.Builder()
             .name("tps-adjust")
-            .description("Auto-adjust speed based on TPS.")
-            .defaultValue(true)
+            .description("Auto-adjust speed based on TPS (useless if server adjusts limits based on TPS on its side).")
+            .defaultValue(false)
             .build()
     );
 
