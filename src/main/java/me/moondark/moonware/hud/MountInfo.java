@@ -69,7 +69,7 @@ public class MountInfo extends HudElement {
     // Mechanics
     private final Setting<Boolean> overrideSaddle = sgMechanics.add(new BoolSetting.Builder()
         .name("override-saddle")
-        .description("If entity is not saddled, put a fake one for a second to get speed values.")
+        .description("If entity is not saddled, put a fake one momentarily to get speed values.")
         .defaultValue(true)
         .build()
     );
