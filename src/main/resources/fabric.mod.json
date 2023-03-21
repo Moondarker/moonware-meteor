@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "addon-template",
+  "id": "meteor-moonware-addon",
   "version": "${version}",
-  "name": "Addon Template",
-  "description": "An addon template for the Meteor addons.",
+  "name": "MoonWare Addon",
+  "description": "MoonWare addon for the Meteor client",
   "authors": [
-    "seasnail"
+    "Moon_dark"
   ],
   "contact": {
-    "repo": "https://github.com/MeteorDevelopment/meteor-addon-template"
+    "repo": "https://github.com/Moondarker/moonware-meteor"
   },
   "icon": "assets/template/icon.png",
   "environment": "client",
   "entrypoints": {
     "meteor": [
-      "com.example.addon.Addon"
+      "me.moondark.moonware.Addon"
     ]
   },
   "mixins": [
-    "addon-template.mixins.json"
+    "moonware.mixins.json"
   ],
   "custom": {
-    "meteor-client:color": "225,25,25"
+    "meteor-client:color": "0,160,224"
   },
   "depends": {
     "java": ">=17",
