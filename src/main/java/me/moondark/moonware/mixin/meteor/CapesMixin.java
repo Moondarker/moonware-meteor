@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CapesMixin {
     @Inject(at = @At("HEAD"), method = "init()V", cancellable = true)
     private static void init(CallbackInfo info) {
-        Addon.LOG.info("[MoonWare] Suppressed Meteor cape request routine");
+        Addon.LOG.info("[MoonWare] Suppressed Meteor cape list requests");
         info.cancel();
     }
 }

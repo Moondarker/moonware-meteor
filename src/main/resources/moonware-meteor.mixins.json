@@ -5,7 +5,8 @@
   "client": [
     "CapesMixin",
     "ConfigMixin",
-    "OnlinePlayersMixin"
+    "OnlinePlayersMixin",
+    "UtilsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
