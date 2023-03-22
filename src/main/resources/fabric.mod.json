@@ -18,7 +18,8 @@
     ]
   },
   "mixins": [
-    "moonware.mixins.json"
+    "moonware.mixins.json",
+    "moonware-meteor.mixins.json"
   ],
   "custom": {
     "meteor-client:color": "0,160,224"

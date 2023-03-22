@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "me.moondark.moonware.mixin.meteor",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "CapesMixin",
+    "ConfigMixin",
+    "OnlinePlayersMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
