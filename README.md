@@ -1,8 +1,3 @@
-# Meteor Addon Template
+# MoonWare Meteor Addon
 
-A template to allow easy usage of the Meteor Addon API.
-
-### How to use:  
-- Clone this project
-- Use this template to create new modules/commands
-- Run the mod with Meteor.
+A collection of useful stuff for Meteor 0.5.1
