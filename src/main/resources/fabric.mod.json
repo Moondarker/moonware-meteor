@@ -27,5 +27,8 @@
     "java": ">=17",
     "minecraft": ">=${mc_version}",
     "meteor-client": "*"
+  },
+  "suggests": {
+    "litematica": ">=0.12.7"
   }
 }

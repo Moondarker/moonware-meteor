@@ -17,6 +17,20 @@ repositories {
         name = "meteor-maven-snapshots"
         url = "https://maven.meteordev.org/snapshots"
     }
+    maven {
+        name = "masa"
+        url = "https://masa.dy.fi/maven"
+        content {
+            includeGroup "fi.dy.masa.malilib"
+        }
+    }
+    maven {
+        name = "curseforge"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -27,6 +41,10 @@ dependencies {
 
     // Meteor
     modImplementation "meteordevelopment:meteor-client:${project.meteor_version}"
+
+    // Litematica (https://github.com/maruohon/litematica)
+	modImplementation("fi.dy.masa.malilib:malilib-fabric-${project.malilib_version}")
+	modImplementation("curse.maven:litematica-${project.litematica_projectid}:${project.litematica_fileid}")
 }
 
 processResources {
