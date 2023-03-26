@@ -1,6 +1,6 @@
 /*
  * This file is part of the Meteor Client distribution (https://github.com/MeteorDevelopment/meteor-client).
- * Modified-By: Moondarker
+ * Modified-By: Moondarker (https://github.com/Moondarker/moonware-meteor).
  * Copyright (c) Meteor Development.
  */
 
