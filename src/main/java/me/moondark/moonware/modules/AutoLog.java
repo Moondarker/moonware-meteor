@@ -101,7 +101,7 @@ public class AutoLog extends Module {
     private final Setting<Boolean> destinationIgnoreY = sgDestination.add(new BoolSetting.Builder()
             .name("destination-ignore-y")
             .description("Ignore Y (altitude) coordinate.")
-            .defaultValue(false)
+            .defaultValue(true)
             .visible(destinationLog::get)
             .build());
 
@@ -149,7 +149,7 @@ public class AutoLog extends Module {
 
     @Override
     public String getInfoString() {
-        return String.valueOf(health.get());
+        return String.valueOf((destinationLog.get() ? "DL or " : "") + health.get() + " HP");
     }
 
     private void handleAutoReconnect() {
