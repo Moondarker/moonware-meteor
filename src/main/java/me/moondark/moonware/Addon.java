@@ -32,6 +32,8 @@ public class Addon extends MeteorAddon {
         LOG.info("Initializing Meteor Addon: MoonWare");
 
         // Modules
+        Modules.get().add(new AutoLog());
+        Modules.get().add(new AutoReconnect());
         Modules.get().add(new EntitySpeed());
         if (Modules.getCategoryByHash(CATEGORY_LITEMATICA.hashCode()) != null) {
             Modules.get().add(new SchematicSafeguard());
