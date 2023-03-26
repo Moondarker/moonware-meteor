@@ -13,6 +13,7 @@ import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
+import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.orbit.EventHandler;
 
 public class Rotation extends Module {
@@ -70,7 +71,7 @@ public class Rotation extends Module {
     public void toggle() {
         super.toggle();
 
-        if (this.isActive()) {
+        if (this.isActive() && Utils.canUpdate()) {
             if (yawLockMode.get() == LockMode.SmartLocked) {
                 yawAngle.set((double) getSmartYawDirection());
             }
