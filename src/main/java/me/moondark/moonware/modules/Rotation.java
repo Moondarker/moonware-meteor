@@ -13,7 +13,6 @@ import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.orbit.EventHandler;
 
 public class Rotation extends Module {
@@ -64,20 +63,24 @@ public class Rotation extends Module {
 
     @Override
     public void onActivate() {
-        onTick(null);
+        if (yawLockMode.get() != LockMode.SmartLocked && pitchLockMode.get() == LockMode.SmartLocked) {
+            onTick(null);
+        }
     }
 
     @Override
-    public void toggle() {
-        super.toggle();
+    public void sendToggledMsg() { // Hacky af, but there is no other easy way to know if module was toggled manuall as far as I can see
+        super.sendToggledMsg();
 
-        if (this.isActive() && Utils.canUpdate()) {
+        if (this.isActive()) {
             if (yawLockMode.get() == LockMode.SmartLocked) {
                 yawAngle.set((double) getSmartYawDirection());
+                onTick(null);
             }
     
             if (pitchLockMode.get() == LockMode.SmartLocked) {
                 pitchAngle.set((double) getSmartPitchDirection());
+                onTick(null);
             }
         }
     }
