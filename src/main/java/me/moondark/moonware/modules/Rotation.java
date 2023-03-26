@@ -69,7 +69,7 @@ public class Rotation extends Module {
     }
 
     @Override
-    public void sendToggledMsg() { // Hacky af, but there is no other easy way to know if module was toggled manuall as far as I can see
+    public void sendToggledMsg() { // Hacky af, but there is no other easy way to know if module was toggled manually, as far as I can see
         super.sendToggledMsg();
 
         if (this.isActive()) {
