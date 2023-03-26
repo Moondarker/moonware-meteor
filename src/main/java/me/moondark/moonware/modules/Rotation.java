@@ -63,15 +63,22 @@ public class Rotation extends Module {
 
     @Override
     public void onActivate() {
-        if (yawLockMode.get() == LockMode.SmartLocked) {
-            yawAngle.set((double) getSmartYawDirection());
-        }
-
-        if (pitchLockMode.get() == LockMode.SmartLocked) {
-            pitchAngle.set((double) getSmartPitchDirection());
-        }
-
         onTick(null);
+    }
+
+    @Override
+    public void toggle() {
+        super.toggle();
+
+        if (this.isActive()) {
+            if (yawLockMode.get() == LockMode.SmartLocked) {
+                yawAngle.set((double) getSmartYawDirection());
+            }
+    
+            if (pitchLockMode.get() == LockMode.SmartLocked) {
+                pitchAngle.set((double) getSmartPitchDirection());
+            }
+        }
     }
 
     @EventHandler
