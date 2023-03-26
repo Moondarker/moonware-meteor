@@ -1,7 +1,9 @@
-package me.moondark.moonware.modules;
+/*
+ * By Moon_dark (Moondarker) 13.07.21, special for -/- corner top diggers list and art
+ * Adapted for Meteor/Litematica 21.11.22
+ */
 
-// by Moon_dark 13.07.21, special for -/- corner top diggers list and art
-// Adapted for Meteor/Litematica 21.11.22
+package me.moondark.moonware.modules;
 
 import me.moondark.moonware.Addon;
 import fi.dy.masa.litematica.data.DataManager;

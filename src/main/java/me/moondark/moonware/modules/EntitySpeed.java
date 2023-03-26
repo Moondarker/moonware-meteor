@@ -1,3 +1,9 @@
+/*
+ * This file is part of the Meteor Client distribution (https://github.com/MeteorDevelopment/meteor-client).
+ * Modified-By: Moondarker
+ * Copyright (c) Meteor Development.
+ */
+
 package me.moondark.moonware.modules;
 
 import meteordevelopment.meteorclient.events.entity.LivingEntityMoveEvent;
