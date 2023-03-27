@@ -36,6 +36,7 @@ public class Addon extends MeteorAddon {
         Modules.get().add(new AutoReconnect());
         Modules.get().add(new EntitySpeed());
         Modules.get().add(new Rotation());
+        Modules.get().add(new MapartShulkerLogger());
         if (Modules.getCategoryByHash(CATEGORY_LITEMATICA.hashCode()) != null) {
             Modules.get().add(new SchematicSafeguard());
         }
