@@ -1,0 +1,3 @@
+accessWidener	v1	named
+
+accessible   field   net/minecraft/client/render/MapRenderer$MapTexture texture Lnet/minecraft/client/texture/NativeImageBackedTexture;

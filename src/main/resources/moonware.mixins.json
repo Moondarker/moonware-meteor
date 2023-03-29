@@ -2,7 +2,9 @@
   "required": true,
   "package": "me.moondark.moonware.mixin",
   "compatibilityLevel": "JAVA_17",
-  "client": [],
+  "client": [
+    "HandledScreenMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

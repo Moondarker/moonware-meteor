@@ -47,6 +47,10 @@ dependencies {
 	modImplementation("curse.maven:litematica-${project.litematica_projectid}:${project.litematica_fileid}")
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/moonware.accesswidener")
+}
+
 processResources {
     filesMatching("fabric.mod.json") {
         expand "version": project.version, "mc_version": project.minecraft_version
