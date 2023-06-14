@@ -1,3 +1,4 @@
 accessWidener	v1	named
 
 accessible   field   net/minecraft/client/render/MapRenderer$MapTexture texture Lnet/minecraft/client/texture/NativeImageBackedTexture;
+accessible   method  net/minecraft/entity/LivingEntity getSaddledSpeed (Lnet/minecraft/entity/LivingEntity;)F

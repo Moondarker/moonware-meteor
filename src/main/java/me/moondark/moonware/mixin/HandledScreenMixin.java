@@ -7,7 +7,7 @@ package me.moondark.moonware.mixin;
 
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.misc.InventoryTweaks;
-import meteordevelopment.meteorclient.utils.render.ContainerButtonWidget;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
@@ -44,13 +44,11 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
             if (mapDumper.isActive()) {
                 boolean offsetButtons = invTweaks.isActive() && invTweaks.showButtons();
 
-                addDrawableChild(new ContainerButtonWidget(
-                    x + backgroundWidth - (offsetButtons ? 130 : 46),
-                    y + 3,
-                    40,
-                    12,
-                    Text.literal("Maps ↓"),
-                    button -> mapDumper.dump(handler))
+                addDrawableChild(
+                    new ButtonWidget.Builder(Text.literal("Maps ↓"), button -> mapDumper.dump(handler))
+                        .position(x + backgroundWidth - (offsetButtons ? 130 : 46), y + 3)
+                        .size(40, 12)
+                        .build()
                 );
             }
         }

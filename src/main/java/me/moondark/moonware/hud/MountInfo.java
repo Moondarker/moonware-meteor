@@ -15,6 +15,8 @@ import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemSteerable;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.passive.AbstractHorseEntity;
 
 public class MountInfo extends HudElement {
@@ -146,9 +148,9 @@ public class MountInfo extends HudElement {
             return;
         }
 
-        if (mount instanceof ItemSteerable) {
-            ItemSteerable steerableMount = (ItemSteerable) mount;
-            render(renderer, String.format("%.2f", steerableMount.getSaddledSpeed() * SPEED_CONVERT_FACTOR), "0");
+        if (mount instanceof Saddleable && mount instanceof LivingEntity) {
+            LivingEntity steerableMount = (LivingEntity) mount;
+            render(renderer, String.format("%.2f", steerableMount.getSaddledSpeed((LivingEntity) mc.player) * SPEED_CONVERT_FACTOR), "0");
             return;
         }
     }
