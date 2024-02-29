@@ -33,7 +33,6 @@ public class Addon extends MeteorAddon {
 
         // Modules
         Modules.get().add(new AutoLog());
-        Modules.get().add(new AutoReconnect());
         Modules.get().add(new EntitySpeed());
         Modules.get().add(new Rotation());
         Modules.get().add(new MapDumper());
