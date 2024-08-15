@@ -113,7 +113,7 @@ public class SignLogger extends Module {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String[] values = line.split(",");
+                    String[] values = line.split("(?!\\B\"[^\"]*),(?![^\"]*\"\\B)");
                     ChunkPos chunkPos = new ChunkPos(Integer.parseInt(values[0]) >> 4, Integer.parseInt(values[2]) >> 4);
                     Chunk chunk = chunks.stream().filter(c -> c.chunkPos.equals(chunkPos)).findAny().orElse(null);
 
@@ -138,7 +138,7 @@ public class SignLogger extends Module {
             file.getParentFile().mkdirs();
             Writer writer = new FileWriter(file);
 
-            writer.write("X,Y,Z,Type,Facing,Text\n");
+            writer.write("X,Y,Z,Type,Facing,FrontText,BackText\n");
             for (Chunk chunk : chunks) chunk.write(writer);
 
             writer.close();
@@ -282,7 +282,7 @@ public class SignLogger extends Module {
                   .append(sign.z).append(',')
                   .append(sign.type).append(',')
                   .append(sign.facing).append(",\"")
-                  .append(String.join("\\\\n", sign.getTextAsStrings(false)).replaceAll("\"","\"\"")).append("\"\n")
+                  .append(String.join("\\\\n", sign.getTextAsStrings(false)).replaceAll("\"","\"\"")).append(",\"")
                   .append(String.join("\\\\n", sign.getTextAsStrings(true)).replaceAll("\"","\"\"")).append("\"\n");
             }
             writer.write(sb.toString());
