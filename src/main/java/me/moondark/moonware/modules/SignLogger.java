@@ -230,8 +230,8 @@ public class SignLogger extends Module {
             
 
             for (int line = 0; line < 4; line++) {
-                this.frontText[line] = Text.empty().append(linesFront[line]);
-                this.backText[line] = Text.empty().append(linesBack[line]);
+                this.frontText[line] = Text.literal(linesFront[line]);
+                this.backText[line] = Text.literal(linesBack[line]);
             }
         }
 
@@ -282,7 +282,7 @@ public class SignLogger extends Module {
                   .append(sign.z).append(',')
                   .append(sign.type).append(',')
                   .append(sign.facing).append(",\"")
-                  .append(String.join("\\\\n", sign.getTextAsStrings(false)).replaceAll("\"","\"\"")).append(",\"")
+                  .append(String.join("\\\\n", sign.getTextAsStrings(false)).replaceAll("\"","\"\"")).append("\",\"")
                   .append(String.join("\\\\n", sign.getTextAsStrings(true)).replaceAll("\"","\"\"")).append("\"\n");
             }
             writer.write(sb.toString());
