@@ -215,7 +215,12 @@ public class MapDumper extends Module {
         MapRenderer.MapTexture texture = ((MapRendererAccessor) mapRenderer).invokeGetMapTexture(mapId, mapState);
 
         try {
-            texture.texture.getImage().writeTo(new File(path, mapId + ".png"));
+            String timestamp = ZonedDateTime
+                .now(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("dd.MM.uuuu HH.mm.ss"));
+            String filename = mapId.id() + " at " + timestamp;
+
+            texture.texture.getImage().writeTo(new File(path, filename + ".png"));
 
             NbtCompound mapData = new NbtCompound();
             mapData.putInt("id", mapId.id());
@@ -223,19 +228,15 @@ public class MapDumper extends Module {
             mapState.writeNbt(mapData, mc.world.getRegistryManager()); // FixMe: This is unlikely to work, lol
             byte[] colors = mapData.getByteArray("colors");
             mapData.remove("colors");
-
-            String timestamp = ZonedDateTime
-                .now(ZoneId.systemDefault())
-                .format(DateTimeFormatter.ofPattern("dd.MM.uuuu HH.mm.ss "));
-            FileOutputStream colorsFile = new FileOutputStream(new File(path, mapId.id() + " at " + timestamp + ".bin"));
+            FileOutputStream colorsFile = new FileOutputStream(new File(path, filename + ".bin"));
             colorsFile.write(colors);
             colorsFile.close();
 
-            FileOutputStream dataFile = new FileOutputStream(new File(path, mapId + ".json"));
+            FileOutputStream dataFile = new FileOutputStream(new File(path, filename + ".json"));
             dataFile.write(NbtHandling.nbtToJson(mapData).getBytes(StandardCharsets.UTF_8));
             dataFile.close();
         } catch (IOException e) {
-            Addon.LOG.error("[MoonWare] [MapDumper] While saving map data for " + mapId + ": " + e.getMessage());
+            Addon.LOG.error("[MoonWare] [MapDumper] While saving map data for " + mapId.id() + ": " + e.getMessage());
         }
     }
 
