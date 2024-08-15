@@ -23,8 +23,7 @@ import net.minecraft.block.WallHangingSignBlock;
 import net.minecraft.block.WallSignBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.LiteralTextContent;
+import net.minecraft.text.PlainTextContent;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextContent;
 import net.minecraft.util.math.BlockPos;
@@ -60,12 +59,12 @@ public class SignLogger extends Module {
 
     @EventHandler
     private void onChunkData(ChunkDataEvent event) {
-        Chunk chunk = new Chunk(event.chunk.getPos());
+        Chunk chunk = new Chunk(event.chunk().getPos());
 
-        for (BlockEntity blockEntity : event.chunk.getBlockEntities().values()) {
+        for (BlockEntity blockEntity : event.chunk().getBlockEntities().values()) {
             if (blockEntity instanceof SignBlockEntity) {
                 SignBlockEntity signBlockEntity = (SignBlockEntity) blockEntity;
-                BlockState blockState = event.chunk.getBlockState(blockEntity.getPos());
+                BlockState blockState = event.chunk().getBlockState(blockEntity.getPos());
                 chunk.signs.add(new Sign(signBlockEntity, blockState));
             }
         }
@@ -84,8 +83,6 @@ public class SignLogger extends Module {
                 info("Found signs at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
             }
         }
-
-        ChunkDataEvent.returnChunkDataEvent(event);
     }
 
     private void load() {
@@ -185,7 +182,8 @@ public class SignLogger extends Module {
         public transient int x, y, z;
         public String type;
         public String facing;
-        public Text[] text;
+        public Text[] frontText;
+        public Text[] backText;
 
         public Sign(SignBlockEntity signBlockEntity, BlockState blockState) {
             Block block = blockState.getBlock();
@@ -210,10 +208,8 @@ public class SignLogger extends Module {
                 this.facing = blockState.get(WallSignBlock.FACING).asString();
             }
 
-            this.text = new Text[]{ScreenTexts.EMPTY, ScreenTexts.EMPTY, ScreenTexts.EMPTY, ScreenTexts.EMPTY};
-            for (int line = 0; line < 4; line++) {
-                this.text[line] = signBlockEntity.getTextOnRow(line, false);
-            }
+            this.frontText = signBlockEntity.getFrontText().getMessages(false);
+            this.backText = signBlockEntity.getBackText().getMessages(false);
         }
 
         public Sign(String[] values) {
@@ -224,23 +220,28 @@ public class SignLogger extends Module {
             this.type = values[3];
             this.facing = values[4];
 
-            String[] lines = values[5].substring(1, values[4].length() - 1)
+            String[] linesFront = values[5].substring(1, values[4].length() - 1)
+                                    .replaceAll("\"\"", "\"")
+                                    .split("\\n");
+
+            String[] linesBack = values[6].substring(1, values[4].length() - 1)
                                     .replaceAll("\"\"", "\"")
                                     .split("\\n");
             
 
             for (int line = 0; line < 4; line++) {
-                this.text[line] = Text.empty().append(lines[line]);
+                this.frontText[line] = Text.empty().append(linesFront[line]);
+                this.backText[line] = Text.empty().append(linesBack[line]);
             }
         }
 
-        public String[] getTextAsStrings() {
+        public String[] getTextAsStrings(boolean backText) {
             String[] result = new String[]{"", "", "", ""};
 
             for (int line = 0; line < 4; line++) {
-                TextContent content = this.text[line].getContent();
-                if (content instanceof LiteralTextContent) {
-                    result[line] = ((LiteralTextContent) content).string();
+                TextContent content = (backText ? this.backText : this.frontText)[line].getContent();
+                if (content instanceof PlainTextContent.Literal) {
+                    result[line] = ((PlainTextContent.Literal) content).string();
                 } else {
                     result[line] = content.toString();
                 }
@@ -281,7 +282,8 @@ public class SignLogger extends Module {
                   .append(sign.z).append(',')
                   .append(sign.type).append(',')
                   .append(sign.facing).append(",\"")
-                  .append(String.join("\\\\n", sign.getTextAsStrings()).replaceAll("\"","\"\"")).append("\"\n");
+                  .append(String.join("\\\\n", sign.getTextAsStrings(false)).replaceAll("\"","\"\"")).append("\"\n")
+                  .append(String.join("\\\\n", sign.getTextAsStrings(true)).replaceAll("\"","\"\"")).append("\"\n");
             }
             writer.write(sb.toString());
         }

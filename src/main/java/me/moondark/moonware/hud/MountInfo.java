@@ -143,13 +143,13 @@ public class MountInfo extends HudElement {
                 saddleResetNeeded = false;
             }
 
-            render(renderer, String.format("%.2f", horseMount.getMovementSpeed() * SPEED_CONVERT_FACTOR), String.format("%.2f", horseMount.getJumpStrength() * JUMP_CONVERT_FACTOR));
+            render(renderer, String.format("%.2f", horseMount.getMovementSpeed() * SPEED_CONVERT_FACTOR), String.format("%.2f", mc.player.getMountJumpStrength() * JUMP_CONVERT_FACTOR));
             return;
         }
 
         if (mount instanceof Saddleable && mount instanceof LivingEntity) {
             LivingEntity steerableMount = (LivingEntity) mount;
-            render(renderer, String.format("%.2f", steerableMount.getSaddledSpeed((LivingEntity) mc.player) * SPEED_CONVERT_FACTOR), "0");
+            render(renderer, String.format("%.2f", steerableMount.getSaddledSpeed(mc.player) * SPEED_CONVERT_FACTOR), "0");
             return;
         }
     }

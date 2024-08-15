@@ -37,9 +37,11 @@ public class Addon extends MeteorAddon {
         Modules.get().add(new Rotation());
         Modules.get().add(new MapDumper());
         Modules.get().add(new SignLogger());
+        /* TODO: Update Litematica to 1.21.1
         if (Modules.getCategoryByHash(CATEGORY_LITEMATICA.hashCode()) != null) {
             Modules.get().add(new SchematicSafeguard());
         }
+        */
 
         // HUD
         Hud.get().register(MountInfo.INFO);

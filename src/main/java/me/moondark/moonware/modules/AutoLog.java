@@ -19,13 +19,13 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.misc.AutoReconnect;
 import meteordevelopment.meteorclient.utils.Utils;
-import meteordevelopment.meteorclient.utils.player.DamageUtils;
+import meteordevelopment.meteorclient.utils.entity.DamageUtils;
 import meteordevelopment.meteorclient.utils.player.PlayerUtils;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
+import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
@@ -226,7 +226,7 @@ public class AutoLog extends Module {
                 }
 
                 if (PlayerUtils.isWithin(entity, 8) && instantDeath.get() && DamageUtils
-                        .getSwordDamage((PlayerEntity) entity, true) > playerHealth + mc.player.getAbsorptionAmount()) {
+                        .getAttackDamage((PlayerEntity) entity, mc.player) > playerHealth + mc.player.getAbsorptionAmount()) {
                     disconnect("Anti-32k measures.");
                     if (toggleOff.get()) this.toggle();
                     return;

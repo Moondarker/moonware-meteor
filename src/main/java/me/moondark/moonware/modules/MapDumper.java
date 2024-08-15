@@ -25,6 +25,8 @@ import meteordevelopment.meteorclient.utils.player.InvUtils;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.render.MapRenderer;
 import net.minecraft.client.texture.NativeImage;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.MapIdComponent;
 import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -117,8 +119,8 @@ public class MapDumper extends Module {
                 ItemStack currentStack = handler.getSlot(i).getStack();
                 if (currentStack == null || currentStack.getItem() != Items.FILLED_MAP) continue;
 
-                Integer mapId = FilledMapItem.getMapId(currentStack);
-                MapState mapState = FilledMapItem.getMapState(mapId, mc.world);
+                MapIdComponent mapId = currentStack.get(DataComponentTypes.MAP_ID);
+                MapState mapState = FilledMapItem.getMapState(currentStack, mc.world);
                 String mapName = currentStack.getName().getString();
 
                 if (mapState == null) {
@@ -158,14 +160,14 @@ public class MapDumper extends Module {
         int retryCounter = 0;
         MapState mapState = null;
         ItemStack currentStack = handler.getSlot(slotId).getStack();
-        int mapId = FilledMapItem.getMapId(currentStack);
+        MapIdComponent mapId = currentStack.get(DataComponentTypes.MAP_ID);
 
         while (mapState == null && retryCounter < mapCacheRetryCount.get()) {
             moveSleep(SleepType.Analyze);
             if (mc.currentScreen == null) return null;
 
             currentStack = handler.getSlot(slotId).getStack();
-            mapId = FilledMapItem.getMapId(currentStack);
+            mapId = currentStack.get(DataComponentTypes.MAP_ID);
             mapState = FilledMapItem.getMapState(mapId, mc.world);
             retryCounter++;
         }
@@ -173,7 +175,7 @@ public class MapDumper extends Module {
         return new MapPollingResult(mapId, mapState);
     }
 
-    private void awaitTextureState(int mapId, MapState mapState, int targetHotbarSlot) {
+    private void awaitTextureState(MapIdComponent mapId, MapState mapState, int targetHotbarSlot) {
         int retryCounter = 0;
         int textureSize = 0;
 
@@ -191,7 +193,7 @@ public class MapDumper extends Module {
         }
     }
 
-    private int getMapTextureSize(int mapId, MapState mapState) {
+    private int getMapTextureSize(MapIdComponent mapId, MapState mapState) {
         MapRenderer mapRenderer = mc.gameRenderer.getMapRenderer();
         MapRenderer.MapTexture texture = ((MapRendererAccessor) mapRenderer).invokeGetMapTexture(mapId, mapState);
         NativeImage mapImage = texture.texture.getImage();
@@ -205,7 +207,7 @@ public class MapDumper extends Module {
         return -1;
     }
 
-    private void exportMap(int mapId, MapState mapState, String mapName, File path) {
+    private void exportMap(MapIdComponent mapId, MapState mapState, String mapName, File path) {
         MapRenderer mapRenderer = mc.gameRenderer.getMapRenderer();
         MapRenderer.MapTexture texture = ((MapRendererAccessor) mapRenderer).invokeGetMapTexture(mapId, mapState);
 
@@ -213,9 +215,9 @@ public class MapDumper extends Module {
             texture.texture.getImage().writeTo(new File(path, mapId + ".png"));
 
             NbtCompound mapData = new NbtCompound();
-            mapData.putInt("id", mapId);
+            mapData.putInt("id", mapId.id());
             mapData.putString("name", mapName);
-            mapState.writeNbt(mapData);
+            mapState.writeNbt(mapData, mc.world.getRegistryManager()); // FixMe: This is unlikely to work, lol
             byte[] colors = mapData.getByteArray("colors");
             mapData.remove("colors");
 
@@ -282,15 +284,15 @@ public class MapDumper extends Module {
     }
 
     private class MapPollingResult {
-        private int mapId;
+        private MapIdComponent mapId;
         private MapState mapState;
 
-        public MapPollingResult(int mapId, MapState mapState) {
+        public MapPollingResult(MapIdComponent mapId, MapState mapState) {
             this.mapId = mapId;
             this.mapState = mapState;
         }
 
-        public int getMapId() {
+        public MapIdComponent getMapId() {
             return mapId;
         }
 

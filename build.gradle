@@ -1,8 +1,8 @@
 plugins {
-    id "fabric-loom" version "1.4-SNAPSHOT"
+    id "fabric-loom" version "1.7-SNAPSHOT"
 }
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -42,9 +42,10 @@ dependencies {
     // Meteor
     modImplementation "meteordevelopment:meteor-client:${project.meteor_version}"
 
+    // TODO: Update Litematica to 1.21.1
     // Litematica (https://github.com/maruohon/litematica)
-	modImplementation("fi.dy.masa.malilib:malilib-fabric-${project.malilib_version}")
-	modImplementation("curse.maven:litematica-${project.litematica_projectid}:${project.litematica_fileid}")
+	// modImplementation("fi.dy.masa.malilib:malilib-fabric-${project.malilib_version}")
+	// modImplementation("curse.maven:litematica-${project.litematica_projectid}:${project.litematica_fileid}")
 }
 
 loom {

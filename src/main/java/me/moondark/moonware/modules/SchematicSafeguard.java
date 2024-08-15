@@ -2,7 +2,7 @@
  * By Moon_dark (Moondarker) 13.07.21, special for -/- corner top diggers list and art
  * Adapted for Meteor/Litematica 21.11.22
  */
-
+/* TODO: Update Litematica to 1.21.1
 package me.moondark.moonware.modules;
 
 import me.moondark.moonware.Addon;
@@ -109,3 +109,4 @@ public class SchematicSafeguard extends Module {
         }
     }
 }
+*/
