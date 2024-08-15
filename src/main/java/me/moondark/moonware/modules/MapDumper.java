@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 import me.moondark.moonware.Addon;
@@ -221,7 +224,10 @@ public class MapDumper extends Module {
             byte[] colors = mapData.getByteArray("colors");
             mapData.remove("colors");
 
-            FileOutputStream colorsFile = new FileOutputStream(new File(path, mapId + ".bin"));
+            String timestamp = ZonedDateTime
+                .now(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("dd.MM.uuuu HH.mm.ss "));
+            FileOutputStream colorsFile = new FileOutputStream(new File(path, mapId.id() + " at " + timestamp + ".bin"));
             colorsFile.write(colors);
             colorsFile.close();
 
